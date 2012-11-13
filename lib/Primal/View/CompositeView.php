@@ -3,9 +3,10 @@ namespace Primal\View;
 
 class CompositeView extends \ArrayObject implements ViewInterface {
 
-    public function add($view) {
+    public function add($view, $index = null) {
         if (!in_array($view, $this->getArrayCopy(), true)) {
-            $this[] = $view;
+            if ($index === null) $this[] = $view;
+			else $this[$index] = $view;
         }
         return $this;
     }
@@ -18,8 +19,16 @@ class CompositeView extends \ArrayObject implements ViewInterface {
         return $this;
     }
 
-	public function append($view) {
-		$this->add($view);
+    public function removeIndex($index) {
+		if (isset($this[$index])) {
+			unset($this[$index]);
+		}
+	
+        return $this;
+    }
+
+	public function append($view, $index = null) {
+		$this->add($view, $index);
 		return $this;
 	}
 	
@@ -36,7 +45,7 @@ class CompositeView extends \ArrayObject implements ViewInterface {
 			array_unshift($array, $view);	
 		}
 		
-		$this->exchangeArray($array);
+		$this->exchangeArray($contents);
 		
 		return $this;
 	}

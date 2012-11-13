@@ -158,8 +158,10 @@ class HTMLTag extends Wrapper {
 			$stack[] = '"';
 		}
 		
+		$noclosing = false;
 		if (in_array(strtolower($this->tagType), array('br','img'), true)) {
 			$stack[] = '/';
+			$noclosing = true;
 		}
 		
 		$stack[] = '>';
@@ -167,7 +169,7 @@ class HTMLTag extends Wrapper {
 		$this->prefix = implode('', $stack);
 
 
-		if ($this->count()) {
+		if (!$noclosing) {
 			$this->suffix = "</{$this->tagType}>";
 		} else {
 			$this->suffix = null;

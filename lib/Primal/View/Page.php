@@ -166,8 +166,8 @@ class Page extends HTMLTag {
 	 * @param string $content 
 	 * @return void
 	 */
-	function add($content) {
-		$this->body->add($content);
+	function add($content, $index = null) {
+		$this->body->add($content, $index);
 		return $this;
 	}
 
